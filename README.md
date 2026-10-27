@@ -22,6 +22,7 @@ plugin card, then hard-refresh the dashboard. The version label is read from
 running. After a successful reload, the log contains:
 
 ```text
+[AlwaysParaphraseImage] v2.0.0 installed profile option provider_settings.always_paraphrase_image. It is disabled by default.
 [AlwaysParaphraseImage] Registered profile option in N profile(s).
 ```
 

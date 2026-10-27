@@ -5,6 +5,8 @@ from astrbot.api.star import Context, Star
 
 from .integration import ForceImageCaptionPatch, ProfileSchemaBridge
 
+RUNTIME_VERSION = "2.0.0"
+
 
 class AlwaysParaphraseImage(Star):
     """Add a per-profile switch that forces built-in image captioning."""
@@ -30,8 +32,9 @@ class AlwaysParaphraseImage(Star):
 
         self._installed = True
         logger.info(
-            "[AlwaysParaphraseImage] Installed profile option "
-            "provider_settings.always_paraphrase_image. It is disabled by default."
+            "[AlwaysParaphraseImage] v%s installed profile option "
+            "provider_settings.always_paraphrase_image. It is disabled by default.",
+            RUNTIME_VERSION,
         )
 
     async def terminate(self) -> None:
