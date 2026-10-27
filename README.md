@@ -1,46 +1,35 @@
 # Always Paraphrase Image
 
-An AstrBot plugin that keeps the main chat model text-only. It paraphrases
-images into captions before every main-model request, even when the main model
-supports image input.
+An AstrBot plugin that adds a **per-profile** switch for forcing AstrBot's
+built-in image paraphrasing even when the chat model supports image input.
 
-This is useful when a session accumulates many images: the main model API body
-stays small because images are never sent to it, and only their text
-descriptions are kept in the conversation history.
+Installing or enabling this plugin does **not** change behavior by itself. The
+switch is disabled by default in every profile.
 
-## What it does
+## Enable it
 
-- Captions images from the current user message.
-- Captions image content parts added by other plugins.
-- Replaces images already stored in the conversation history with captions, so
-  old images do not keep inflating later requests.
-- Caches captions in memory to avoid describing the same image repeatedly.
-- Fails closed: if the captioning provider is missing, times out, or errors, the
-  image is still removed and replaced with a text placeholder.
+1. Install and enable the plugin.
+2. Refresh the AstrBot dashboard.
+3. Open your profile: **配置文件 → AI → 通用设置 → 图像与语音**.
+4. Turn on **始终转述图片 / Always paraphrase images**.
 
-## Install
+The switch is per profile. Sessions using another profile keep their own
+setting.
 
-1. Put this repository in `data/plugins/astrbot_plugin_always_paraphrase_image`.
-2. Restart AstrBot or reload plugins.
-3. Configure `Image captioning provider` in the plugin settings, or keep it
-   empty to use AstrBot's existing `default_image_caption_provider_id` setting.
+## Built-in paraphrasing only
 
-The plugin uses AstrBot's normal image-captioning prompt by default. You can
-override the prompt in the plugin settings.
+The plugin does not define a captioning provider, prompt, timeout, or any other
+LLM configuration. It reuses the profile's existing **图片转述模型** and
+**图片转述提示词** and only changes the decision that normally disables that
+built-in path for image-capable chat models.
 
-## Configuration
+An image-captioning model must be configured in the same profile. If it is
+empty, the switch is inert.
 
-| Option | Description |
-| --- | --- |
-| `caption_provider_id` | Chat provider used to describe images. Empty falls back to AstrBot's image-captioning provider setting, then to the session's image-capable chat provider when available. |
-| `caption_prompt` | Prompt used for each image. Empty falls back to AstrBot's `image_caption_prompt`. |
-| `caption_timeout_seconds` | Per-image timeout. `0` disables the timeout. |
+## Scope
 
-## Notes
-
-- The plugin only affects requests made through AstrBot's main agent pipeline.
-- Each image gets its own caption request, with bounded concurrency. This makes
-  the result easy to map back to each image and lets identical images reuse the
-  caption cache.
-- Captions are text. They are persisted with the conversation so future turns
-  remain text-only.
+- Applies to AstrBot's built-in Agent request path.
+- Third-party runners such as Dify, Coze, DashScope, and DeerFlow manage their
+  own image handling and are not affected.
+- Disabling the plugin removes the profile option and restores AstrBot's normal
+  behavior. The stored per-profile value is preserved for the next enable.

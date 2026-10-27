@@ -1,12 +1,12 @@
 name: astrbot_plugin_always_paraphrase_image
 display_name: Always Paraphrase Image
-short_desc: Force every main-model request to use text captions instead of images.
+short_desc: Add a per-profile switch that forces built-in image paraphrasing.
 desc: >-
-  Converts current images, plugin-added image parts, and historical conversation
-  images into text captions before each main-model request. This keeps a session
-  text-only and prevents large image payloads from bloating the model API body,
-  even when the main model supports image input.
-version: 1.0.0
+  Adds a profile-level "Always paraphrase images" option. When enabled, the
+  built-in image-captioning path runs even for image-capable chat models, so the
+  main model receives the existing caption text instead of image payloads. The
+  plugin does not define its own image-captioning provider or prompt.
+version: 2.0.0
 author: Astricaelus
 repo: https://github.com/Astricaelus/Always-Paraphrase-Image
-astrbot_version: ">=4.29.0,<5.0.0"
+astrbot_version: ">=4.29.0,<4.30"
