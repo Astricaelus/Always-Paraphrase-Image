@@ -16,6 +16,15 @@ switch is disabled by default in every profile.
 The switch is per profile. Sessions using another profile keep their own
 setting.
 
+If the option is missing, click the circular-arrow **reload** button on the
+plugin card, then hard-refresh the dashboard. The version label is read from
+`metadata.yaml`, so it can show `2.0.0` while an older plugin instance is still
+running. After a successful reload, the log contains:
+
+```text
+[AlwaysParaphraseImage] Registered profile option in N profile(s).
+```
+
 ## Built-in paraphrasing only
 
 The plugin does not define a captioning provider, prompt, timeout, or any other

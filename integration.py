@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 from typing import Any
 
+from astrbot.api import logger
 from astrbot.core import astr_main_agent
 from astrbot.core.config.default import (
     CONFIG_METADATA_2,
@@ -198,6 +199,7 @@ class ProfileSchemaBridge:
                 validation_items.setdefault(PROFILE_KEY, {"type": "bool"})
 
             config_manager = getattr(self.context, "astrbot_config_mgr", None)
+            profile_count = 0
             for config in (getattr(config_manager, "confs", {}) or {}).values():
                 if not isinstance(config, dict):
                     continue
@@ -206,8 +208,13 @@ class ProfileSchemaBridge:
                     provider_settings = {}
                     config["provider_settings"] = provider_settings
                 provider_settings.setdefault(PROFILE_KEY, False)
+                profile_count += 1
 
             self._install_converter()
+            logger.info(
+                "[AlwaysParaphraseImage] Registered profile option in %d profile(s).",
+                profile_count,
+            )
         except BaseException:
             self.remove()
             raise
