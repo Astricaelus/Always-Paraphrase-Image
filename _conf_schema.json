@@ -1,0 +1,26 @@
+{
+  "caption_provider_id": {
+    "description": "Image captioning provider",
+    "hint": "Leave empty to use AstrBot's provider setting 'default_image_caption_provider_id'. If that is also empty, the session's image-capable chat provider is used when possible.",
+    "type": "string",
+    "default": "",
+    "_special": "select_provider"
+  },
+  "caption_prompt": {
+    "description": "Image captioning prompt",
+    "hint": "Leave empty to use AstrBot's provider setting 'image_caption_prompt'.",
+    "type": "text",
+    "default": ""
+  },
+  "caption_timeout_seconds": {
+    "description": "Caption timeout (seconds)",
+    "hint": "Maximum time allowed for captioning one image. Set to 0 to disable the timeout.",
+    "type": "int",
+    "default": 60,
+    "slider": {
+      "min": 0,
+      "max": 300,
+      "step": 5
+    }
+  }
+}
